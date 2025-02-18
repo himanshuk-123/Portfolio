@@ -40,7 +40,7 @@ const Profile = () => {
         >
           I’m a <span className="font-bold">passionate developer</span> focused on building high-performance mobile apps and scalable web solutions. Currently, I’m working on a <span className="font-bold">University Resource Sharing Platform</span> I’m actively seeking <span className="font-bold">internship and job opportunities</span> where I can contribute my expertise in <span className="font-bold">React Native, JavaScript, and web development</span> while continuing to learn and grow. My goal is to develop impactful solutions that enhance user experience and efficiency.  
 
-Let’s connect and build something great together! 🚀        </motion.p>
+Let’s connect and build something great together! 🚀 </motion.p>
 
         {/* Social Links */}
         <div className="flex justify-center md:justify-start gap-4 mt-6">

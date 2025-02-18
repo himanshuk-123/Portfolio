@@ -10,7 +10,7 @@ const Contact = () => {
   const onSubmit = async (data) => {
     try {
       console.log('Send Message button pressed');
-      await axios.post('http://192.168.112.184:5000/hire/hire',data );
+      await axios.post('/hire/hire',data );
       console.log(data);
       alert('Message sent successfully');
     } catch (error) {
