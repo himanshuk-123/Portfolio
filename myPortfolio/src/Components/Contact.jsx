@@ -9,14 +9,20 @@ const Contact = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log('Send Message button pressed');
-      await axios.post('/hire',data );
-      console.log(data);
-      alert('Message sent successfully');
+        console.log('Send Message button pressed');
+        console.log('Data being sent:', data); // ✅ Log data before sending
+
+        const response = await axios.post('/hire/hire', data);
+
+        console.log('Response from server:', response.data); // ✅ Log response
+        alert('Message sent successfully');
+        reset(); // ✅ Reset the form after successful submission
     } catch (error) {
-      console.error(error);
+        console.error('Error sending message:', error.response ? error.response.data : error.message);
+        alert('Failed to send message. Please try again.');
     }
-  };
+};
+
 
   return (
     <motion.div
