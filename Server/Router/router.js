@@ -14,6 +14,7 @@ router.post('/hire', async (req, res) => {
     const newMessage = new PortfolioData({ name, email, message });
 
     await newMessage.save();
+    console.log(newMessage); // ✅ Log the message for debugging
     return res.status(200).json({ message: "Message sent successfully", success: true });
   } catch (error) {
     console.error(error); // ✅ Log the error for debugging
