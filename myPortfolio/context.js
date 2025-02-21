@@ -1,5 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = 'https://hk-portfolio-zlvp.onrender.com'
+const BASE_URL = 'https://hk-portfolio-zlvp.onrender.com';
+axios.defaults.baseURL = BASE_URL;
 
 export default BASE_URL;
