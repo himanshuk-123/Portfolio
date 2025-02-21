@@ -15,7 +15,7 @@ router.post('/hire', async (req, res) => {
 
     await newMessage.save();
     console.log(newMessage); // ✅ Log the message for debugging
-    return res.status(200).json({ message: "Message sent successfully", success: true });
+    return res.status(200).json({ message: "Message Recieve successfully", success: true });
   } catch (error) {
     console.error(error); // ✅ Log the error for debugging
     return res.status(500).json({ error: "Server error, please try again later" });
