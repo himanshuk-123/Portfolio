@@ -1,3 +1,5 @@
-const BASE_URL = 'http://192.168.112.184:5000';
+import axios from "axios";
+
+axios.defaults.baseURL = 'https://hk-portfolio-zlvp.onrender.com'
 
 export default BASE_URL;

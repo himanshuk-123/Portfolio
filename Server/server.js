@@ -6,7 +6,6 @@ import connectDB from './db.js';
 import router from './Router/router.js';
 dotenv.config();
 connectDB();
-console.log("himanshu")
 const app = express();
 app.use(cors()); // ✅ Add CORS middleware to allow cross-origin requests
 app.use(express.json()); // ✅ Add middleware to parse JSON requests
