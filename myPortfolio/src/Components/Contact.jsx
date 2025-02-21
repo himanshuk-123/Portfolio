@@ -10,7 +10,7 @@ const Contact = () => {
   const onSubmit = async (data) => {
     try {
       console.log('Send Message button pressed');
-      await axios.post('/hire/hire',data );
+      await axios.post('/hire',data );
       console.log(data);
       alert('Message sent successfully');
     } catch (error) {

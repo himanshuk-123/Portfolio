@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-app.use('/hire', router); // ✅ Use Router instead of direct function
+app.use('/', router); // ✅ Use Router instead of direct function
 
 app.get('/about', (req, res) => {
   res.send('About page');
