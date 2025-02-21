@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaLinkedin, FaGithub, FaEnvelope, FaPhone } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -6,23 +6,26 @@ import axios from "axios";
 
 const Contact = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
-        console.log('Send Message button pressed');
-        console.log('Data being sent:', data); // ✅ Log data before sending
-
-        const response = await axios.post('https://hk-portfolio-zlvp.onrender.com/api/hire', data);
-
-        console.log('Response from server:', response.data); // ✅ Log response
-        alert('Message sent successfully');
-        reset(); // ✅ Reset the form after successful submission
+      console.log('Send Message button pressed');
+      console.log('Data being sent:', data);
+      
+      const response = await axios.post('https://hk-portfolio-zlvp.onrender.com/api/hire', data);
+      
+      console.log('Response from server:', response.data);
+      alert('Message sent successfully');
+      reset();
     } catch (error) {
-        console.error('Error sending message:', error.response ? error.response.data : error.message);
-        alert('Failed to send message. Please try again.');
+      console.error('Error sending message:', error.response ? error.response.data : error.message);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
     }
-};
-
+  };
 
   return (
     <motion.div
@@ -32,9 +35,7 @@ const Contact = () => {
       transition={{ duration: 0.8 }}
     >
       <h2 className="text-3xl font-bold text-center text-gray-800">Contact Me</h2>
-      <p className="text-center text-gray-600 mt-2">
-        Feel free to reach out for collaborations or inquiries.
-      </p>
+      <p className="text-center text-gray-600 mt-2">Feel free to reach out for collaborations or inquiries.</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
         <motion.input
@@ -68,48 +69,14 @@ const Contact = () => {
 
         <motion.button
           type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg shadow-md hover:bg-blue-700 transition"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className={`w-full py-3 rounded-lg shadow-md transition ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"} text-white`}
+          whileHover={!loading ? { scale: 1.05 } : {} }
+          whileTap={!loading ? { scale: 0.95 } : {} }
+          disabled={loading}
         >
-          Send Message
+          {loading ? "Sending..." : "Send Message"}
         </motion.button>
       </form>
-
-      <div className="flex justify-center gap-6 mt-6">
-        <motion.a
-          href="https://linkedin.com/in/himanshu-kasoudhan-538a93290"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-600 text-3xl hover:text-blue-500 transition"
-          whileHover={{ scale: 1.2 }}
-        >
-          <FaLinkedin />
-        </motion.a>
-        <motion.a
-          href="https://github.com/himanshuk-123"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-600 text-3xl hover:text-black transition"
-          whileHover={{ scale: 1.2 }}
-        >
-          <FaGithub />
-        </motion.a>
-        <motion.a
-          href="mailto:2023bcamafshimanshu14272@poornima.edu.in"
-          className="text-gray-600 text-3xl hover:text-red-500 transition"
-          whileHover={{ scale: 1.2 }}
-        >
-          <FaEnvelope />
-        </motion.a>
-        <motion.a
-          href="tel:+918468087211"
-          className="text-gray-600 text-3xl hover:text-green-500 transition"
-          whileHover={{ scale: 1.2 }}
-        >
-          <FaPhone />
-        </motion.a>
-      </div>
     </motion.div>
   );
 };
