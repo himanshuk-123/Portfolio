@@ -12,7 +12,7 @@ const Contact = () => {
         console.log('Send Message button pressed');
         console.log('Data being sent:', data); // ✅ Log data before sending
 
-        const response = await axios.post('/hire/hire', data);
+        const response = await axios.post('https://hk-portfolio-zlvp.onrender.com/api/hire', data);
 
         console.log('Response from server:', response.data); // ✅ Log response
         alert('Message sent successfully');
