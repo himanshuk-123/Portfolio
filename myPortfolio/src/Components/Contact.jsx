@@ -10,11 +10,11 @@ const Contact = () => {
 
   useEffect(() => {
     // Send a request to backend when website loads
-    axios.get("http://192.168.112.184:5000/start")
+    axios.get("https://hk-portfolio-zlvp.onrender.com/start")
       .then(response => console.log("✅ Backend started:", response.data))
       .catch(error => console.error("❌ Backend start error:", error));
   }, []);
-  
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
