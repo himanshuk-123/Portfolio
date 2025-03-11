@@ -1,27 +1,31 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import colors from 'colors';
 import cors from 'cors';
-dotenv.config();
+import dotenv from 'dotenv';
 import connectDB from './db.js';
-import router from './Router/router.js';
-connectDB();
+import sendMessageRouter from './Router/sendMessage.js';
+
+dotenv.config();
 const app = express();
-app.use(cors({ origin: '*' }));// ✅ Add CORS middleware to allow cross-origin requests
-app.use(express.json()); // ✅ Add middleware to parse JSON requests
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
+app.use(cors());
+app.use(express.json());
+
+// Connect to MongoDB before starting the server
+connectDB().then(() => {
+    console.log("✅ Database Connected Successfully");
+
+    // Start the server only after DB connection is successful
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`.yellow.bold);
+    });
+}).catch((error) => {
+    console.error("❌ Database connection failed:", error);
+    process.exit(1); // Exit process if DB fails to connect
 });
 
-app.use('/api', router); // ✅ Use Router instead of direct function
-
-app.get('/about', (req, res) => {
-  res.send('About page');
-});
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`.yellow.bold);
-});
+// Routes
+app.get('/', (req, res) => res.send('API is running...'));
+app.use('/hire', sendMessageRouter);
+app.get('/about', (req, res) => res.send('About page'));
