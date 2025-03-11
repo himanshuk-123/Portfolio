@@ -11,21 +11,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB before starting the server
-connectDB().then(() => {
-    console.log("✅ Database Connected Successfully");
+let isDBConnected = false;
 
-    // Start the server only after DB connection is successful
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-        console.log(`🚀 Server running on port ${PORT}`.yellow.bold);
-    });
-}).catch((error) => {
-    console.error("❌ Database connection failed:", error);
-    process.exit(1); // Exit process if DB fails to connect
+// Route to start the server & database connection dynamically
+app.get('/start', async (req, res) => {
+    if (!isDBConnected) {
+        try {
+            await connectDB();
+            isDBConnected = true;
+            console.log("✅ Database Connected Successfully");
+            res.status(200).json({ message: "Database Connected" });
+        } catch (error) {
+            console.error("❌ Database Connection Failed:", error);
+            return res.status(500).json({ error: "Database Connection Failed" });
+        }
+    } else {
+        res.status(200).json({ message: "Database Already Connected" });
+    }
 });
 
 // Routes
-app.get('/', (req, res) => res.send('API is running...'));
 app.use('/hire', sendMessageRouter);
-app.get('/about', (req, res) => res.send('About page'));
+app.get('/', (req, res) => res.send('API is running...'));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`.yellow.bold);
+});
